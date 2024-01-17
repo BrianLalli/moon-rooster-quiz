@@ -29,38 +29,34 @@ export const quizTopics: QuizTopic[] = [
     title: 'Python',
     icon: <Python />,
   },
+
+  {
+    title: 'CSS',
+    icon: <CSS />,
+  },
+  {
+    title: 'SQL',
+    icon: <Laravel />,
+  },
   {
     title: 'General Knowledge',
     icon: <BulbIcon />,
   },
   {
-    title: 'Gatsby',
+    title: 'The Office',
     icon: <Gatsby />,
-    disabled: true,
+    disabled: false,
   },
   {
-    title: 'Angular',
+    title: 'Pittsburgh Steelers',
     icon: <Angular />,
-    disabled: true,
   },
   {
-    title: 'Django',
-    icon: <Django />,
-    disabled: true,
+    title: 'Football Officiating',
+    icon: <Django />
   },
   {
-    title: 'CSS',
-    icon: <CSS />,
-    disabled: true,
-  },
-  {
-    title: 'Kotlin',
+    title: 'Mixology',
     icon: <Kotlin />,
-    disabled: true,
-  },
-  {
-    title: 'Laravel',
-    icon: <Laravel />,
-    disabled: true,
   },
 ]

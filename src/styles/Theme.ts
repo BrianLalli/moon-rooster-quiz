@@ -1,4 +1,6 @@
-import { Theme } from './styled'
+// Theme.ts
+
+import { Theme } from './styled';
 
 export const themes: Record<string, Theme> = {
   light: {
@@ -6,16 +8,16 @@ export const themes: Record<string, Theme> = {
       primaryText: '#11052C', // question text color
       secondaryText: '#2D264B', // answer text color
       themeText: '#000000',
-      themeColor: '#800080',
-      themeGradient: 'linear-gradient(to right,#800080, #FFC0CB)',
+      themeColor: '#1c75bc', // Updated primary color
+      themeGradient: 'linear-gradient(to right, #1c75bc, #61DBFB)',
       background: '#E5E5E5',
       cardBackground: '#FFFFFF',
       selectTopicBg: '#FFFFFF',
       appLogo: '#000000',
       buttonText: '#FFFFFF',
-      outlineButtonText: '#800080',
-      buttonBackground: 'linear-gradient(90.04deg, #800080 0.03%, #FFC0CB 99.96%)',
-      selectedAnswer: '#FFD6FF',
+      outlineButtonText: '#1c75bc', // Updated primary color
+      buttonBackground: 'linear-gradient(90.04deg, #1c75bc 0.03%, #61DBFB 99.96%)', // Updated primary color
+      selectedAnswer: '#61DBFB',
       infoText: '#FF783F', // skip tag text
       infoBackground: '#ffb23f26', // skip tag background
       border: '#EAEAEA',
@@ -51,16 +53,16 @@ export const themes: Record<string, Theme> = {
       primaryText: '#FFFFFF', // question text color
       secondaryText: '#FFFFFF', // answer text color
       themeText: '#FFFFFF',
-      themeColor: '#C000C0',
-      themeGradient: 'linear-gradient(90deg, #0e050e 0%, #281e20 100%)',
-      background: 'linear-gradient(90deg, #0e050e 0%, #281e20 100%)',
+      themeColor: '#1c75bc', // Updated to match primary color
+      themeGradient: 'linear-gradient(90deg, #1c75bc 0%, #281e20 100%)', // Updated to match primary color
+      background: 'linear-gradient(90deg, #1c75bc 0%, #281e20 100%)', // Updated to match primary color
       cardBackground: '#241a1a',
       selectTopicBg: '#21191C',
       appLogo: '#FFFFFF',
       buttonText: '#000000',
       outlineButtonText: '#ffffff',
-      buttonBackground: 'linear-gradient(90.04deg, #800080 0.03%, #FFC0CB 99.96%)',
-      selectedAnswer: '#151113',
+      buttonBackground: 'linear-gradient(90.04deg, #1c75bc 0.03%, #61DBFB 99.96%)', // Updated to match primary color
+      selectedAnswer: '#61DBFB',
       infoText: '#FF783F', // skip tag text
       infoBackground: '#ffb23f26', // skip tag background
       border: 'transparent',
@@ -91,4 +93,4 @@ export const themes: Record<string, Theme> = {
       pageTop: '30px',
     },
   },
-}
+};

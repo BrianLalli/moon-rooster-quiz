@@ -2,6 +2,12 @@ import { generalKnowledge } from './generalKnowledge'
 import { javascript } from './javascript'
 import { python } from './python'
 import { react } from './react'
+import {theOffice} from './theOffice'
+import {pittsburghSteelers} from './pittsburghSteelers'
+import {footballOfficiating} from './footballOfficiating'
+import {mixology} from './mixology'
+import {sql} from './sql'
+import {css} from './css'
 
 // Question Types
 // 1. MCQs | Multiple Choice | single
@@ -35,4 +41,10 @@ export const quiz: Record<string, Topic> = {
   React: react,
   Python: python,
   'General Knowledge': generalKnowledge,
+  'The Office': theOffice,
+  'Pittsburgh Steelers': pittsburghSteelers,
+  'Football Officiating': footballOfficiating,
+  'Mixology': mixology,
+  'SQL': sql,
+  'CSS': css,
 }
