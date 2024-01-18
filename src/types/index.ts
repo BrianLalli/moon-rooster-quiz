@@ -7,6 +7,7 @@ export enum ScreenTypes {
   QuizDetailsScreen,
   QuestionScreen,
   ResultScreen,
+  LeaderBoardScreen,
 }
 
 export interface Result extends Question {

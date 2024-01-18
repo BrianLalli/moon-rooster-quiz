@@ -8,6 +8,7 @@ import QuizDetailsScreen from '../QuizDetailsScreen';
 import QuizTopicsScreen from '../QuizTopicsScreen';
 import ResultScreen from '../ResultScreen';
 import SplashScreen from '../SplashScreen';
+import LeaderBoardScreen from '../LeaderBoardScreen';
 
 interface MainProps {
     setIsQuizFinished: (isFinished: boolean) => void; // Add this line
@@ -37,6 +38,7 @@ function Main({ setIsQuizFinished }: MainProps) { // Modify this line
     [ScreenTypes.QuizDetailsScreen]: <QuizDetailsScreen />,
     [ScreenTypes.QuestionScreen]: <QuestionScreen />,
     [ScreenTypes.ResultScreen]: <ResultScreen />,
+    [ScreenTypes.LeaderBoardScreen]: <LeaderBoardScreen />,
   };
 
   const ComponentToRender = screenComponents[currentScreen] || <SplashScreen />;

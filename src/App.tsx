@@ -4,7 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import Main from './components/Main';
 import ToggleTheme from './components/ui/ToggleTheme';
 import QuizProvider from './context/QuizProvider';
-import Leaderboard from './components/LeaderBoardScreen';
 import { GlobalStyles } from './styles/Global';
 import { themes } from './styles/Theme';
 
@@ -13,9 +12,6 @@ function App() {
     const savedTheme = localStorage.getItem('theme');
     return savedTheme || 'light';
   });
-
-  // State to track if the quiz is finished
-  const [isQuizFinished, setIsQuizFinished] = useState(false);
 
   const toggleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -36,8 +32,7 @@ function App() {
           id="toggleTheme"
           value="theme"
         />
-        <Main setIsQuizFinished={setIsQuizFinished} />
-        {isQuizFinished && <Leaderboard />}
+        <Main setIsQuizFinished={(isFinished) => {/* Your function to set the quiz finished state */} } />
       </QuizProvider>
     </ThemeProvider>
   );

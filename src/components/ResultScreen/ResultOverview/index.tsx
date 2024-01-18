@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import supabase from '../../../api/supabaseClient'; // Adjust the path as necessary
+import supabase from '../../../api/supabaseClient';
 import { useQuiz } from '../../../context/QuizContext';
 import { device } from '../../../styles/BreakPoints';
 import { HighlightedText } from '../../../styles/Global';
 import { convertSeconds } from '../../../utils/helpers';
-import { Result } from '../../../types';
+import { Result, ScreenTypes } from '../../../types';
 
 const ResultOverviewStyle = styled.div`
   text-align: center;
@@ -46,12 +46,27 @@ const SubmitButton = styled.button`
   }
 `;
 
+const ViewLeaderboardButton = styled.button`
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
 interface ResultOverviewProps {
   result: Result[]
 }
 
 const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
-  const { quizDetails, endTime, quizTopic } = useQuiz();
+  const { quizDetails, endTime, setCurrentScreen, quizTopic } = useQuiz();
 
   const totalQuestionAttempted = result.length;
 
@@ -68,16 +83,18 @@ const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
     event.preventDefault();
 
     const { error } = await supabase.from('scores').insert([
-      { username: username, points: obtainedScore, topic: quizTopic }
+      { username, points: obtainedScore, topic: quizTopic }
     ]);
 
     if (error) {
       console.error('Error submitting score:', error);
-      // Handle error
     } else {
-      // Handle successful submission
-      // Optionally, navigate to the leaderboard or show a success message
+      setCurrentScreen(ScreenTypes.LeaderBoardScreen); // Navigate to the leaderboard after submitting score
     }
+  };
+
+  const goToLeaderboard = () => {
+    setCurrentScreen(ScreenTypes.LeaderBoardScreen);
   };
 
   return (
@@ -109,6 +126,9 @@ const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
           <SubmitButton type="submit">Submit Score</SubmitButton>
         </form>
       </FormContainer>
+      <ViewLeaderboardButton onClick={goToLeaderboard}>
+        View Leaderboard
+      </ViewLeaderboardButton>
     </ResultOverviewStyle>
   );
 };
