@@ -19,11 +19,11 @@ const LeaderboardHeading = styled.h2`
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
-  color: #333;
+  color: ${({ theme }) => theme.colors.primaryText}; /* Use the primaryText color from the theme */
 `;
 
 const SortButton = styled.button`
-  background-color: #4caf50;
+  background-color: #1c75bc;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -32,7 +32,7 @@ const SortButton = styled.button`
   margin-bottom: 10px;
 
   &:hover {
-    background-color: #43a047;
+    background-color: #61DBFB;
   }
 `;
 
@@ -66,12 +66,13 @@ const MotionLeaderboardItem = styled(motion.li)`
 
 const Score = styled.span`
   font-weight: bold;
-  color: #4caf50;
+  color: #1c75bc;
 `;
 
 const Username = styled.span`
   font-weight: normal;
   color: #333;
+  margin-right: 10px;
 `;
 
 const LoadingText = styled.p`
