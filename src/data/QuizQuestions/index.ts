@@ -8,6 +8,7 @@ import {footballOfficiating} from './footballOfficiating'
 import {mixology} from './mixology'
 import {sql} from './sql'
 import {css} from './css'
+import {golf} from './golf'
 
 // Question Types
 // 1. MCQs | Multiple Choice | single
@@ -47,4 +48,5 @@ export const quiz: Record<string, Topic> = {
   'Mixology': mixology,
   'SQL': sql,
   'CSS': css,
+  'Golf': golf,
 }
