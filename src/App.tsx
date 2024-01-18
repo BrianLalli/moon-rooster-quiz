@@ -1,25 +1,29 @@
-import { useState } from 'react'
-import { ThemeProvider } from 'styled-components'
+import { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
-import Main from './components/Main'
-import ToggleTheme from './components/ui/ToggleTheme'
-import QuizProvider from './context/QuizProvider'
-import { GlobalStyles } from './styles/Global'
-import { themes } from './styles/Theme'
+import Main from './components/Main';
+import ToggleTheme from './components/ui/ToggleTheme';
+import QuizProvider from './context/QuizProvider';
+import Leaderboard from './components/LeaderBoardScreen';
+import { GlobalStyles } from './styles/Global';
+import { themes } from './styles/Theme';
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme')
-    return savedTheme || 'light'
-  })
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'light';
+  });
+
+  // State to track if the quiz is finished
+  const [isQuizFinished, setIsQuizFinished] = useState(false);
 
   const toggleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target
-    setCurrentTheme(checked ? 'dark' : 'light')
-    localStorage.setItem('theme', checked ? 'dark' : 'light')
-  }
+    const { checked } = e.target;
+    setCurrentTheme(checked ? 'dark' : 'light');
+    localStorage.setItem('theme', checked ? 'dark' : 'light');
+  };
 
-  const theme = currentTheme === 'light' ? themes.light : themes.dark
+  const theme = currentTheme === 'light' ? themes.light : themes.dark;
 
   return (
     <ThemeProvider theme={theme}>
@@ -32,10 +36,11 @@ function App() {
           id="toggleTheme"
           value="theme"
         />
-        <Main />
+        <Main setIsQuizFinished={setIsQuizFinished} />
+        {isQuizFinished && <Leaderboard />}
       </QuizProvider>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

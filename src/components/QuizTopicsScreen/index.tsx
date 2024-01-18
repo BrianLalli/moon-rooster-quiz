@@ -92,7 +92,7 @@ const QuizTopicsScreen: React.FC = () => {
           <AppLogo />
         </LogoContainer>
         <Heading>
-          WELCOME TO <HighlightedText> THE MOON ROOSTER QUIZ</HighlightedText>
+          WELCOME TO THE<HighlightedText> MOON ROOSTER QUIZ</HighlightedText>
         </Heading>
         <DetailText>Select topic below to start your Quiz.</DetailText>
         <SelectButtonContainer>
