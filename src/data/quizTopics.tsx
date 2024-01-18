@@ -5,10 +5,10 @@ import { ReactComponent as Python } from '../assets/icons/python.svg'
 import { ReactComponent as ReactIcon } from '../assets/icons/react.svg'
 import { ReactComponent as BulbIcon } from '../assets/icons/bulb.svg'
 import { ReactComponent as SQL } from '../assets/icons/sql-database-sql-azure.svg'
-import { ReactComponent as TheOffice } from '../assets/icons/OFFICE-LOGO.svg'
-import { ReactComponent as Referee } from '../assets/icons/referee.svg'
+import { ReactComponent as TheOffice } from '../assets/icons/prisonmike.svg'
+import { ReactComponent as Referee } from '../assets/icons/referee-svgrepo-com.svg'
 import { ReactComponent as Mixology } from '../assets/icons/cocktail-glass.svg'
-import { ReactComponent as Steelers } from '../assets/icons/steelers.svg'
+import { ReactComponent as Steelers } from '../assets/icons/pittsburgh-steelers-logo.svg'
 import { ReactComponent as Golf } from '../assets/icons/flag-in-hole (1).svg'
 
 
