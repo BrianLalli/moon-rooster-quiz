@@ -46,7 +46,7 @@ const SelectButtonContainer = styled.div`
 
 const ViewLeaderboardButton = styled.button`
   padding: 10px 15px;
-  background: linear-gradient(90deg, #61DBFB, #1c75bc); /* Gradient background with the two colors */
+  background: linear-gradient(90deg, #000000, #1c75bc); /* Gradient background with the two colors */
   color: white; /* Text color */
   border: none;
   border-radius: 8px;
