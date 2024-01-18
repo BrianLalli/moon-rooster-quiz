@@ -51,7 +51,7 @@ interface ResultOverviewProps {
 }
 
 const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
-  const { quizDetails, endTime } = useQuiz();
+  const { quizDetails, endTime, quizTopic } = useQuiz();
 
   const totalQuestionAttempted = result.length;
 
@@ -68,15 +68,15 @@ const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
     event.preventDefault();
 
     const { error } = await supabase.from('scores').insert([
-      { username: username, points: obtainedScore }
+      { username: username, points: obtainedScore, topic: quizTopic }
     ]);
 
     if (error) {
       console.error('Error submitting score:', error);
-      // Handle error (e.g., show a message to the user)
+      // Handle error
     } else {
-      // Handle successful submission (e.g., navigate to leaderboard or show a success message)
-      // Optionally, call a function to refresh the leaderboard if it's available
+      // Handle successful submission
+      // Optionally, navigate to the leaderboard or show a success message
     }
   };
 
