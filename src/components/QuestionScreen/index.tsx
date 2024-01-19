@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Result } from '../../types/index';
 
 import { AppLogo, CheckIcon, Next, TimerIcon } from '../../config/icons'
 import { useQuiz } from '../../context/QuizContext'
@@ -64,10 +65,10 @@ const ButtonWrapper = styled.div`
 `
 
 const QuestionScreen: FC = () => {
-  const [activeQuestion, setActiveQuestion] = useState<number>(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([])
-  const [showTimerModal, setShowTimerModal] = useState<boolean>(false)
-  const [showResultModal, setShowResultModal] = useState<boolean>(false)
+  const [activeQuestion, setActiveQuestion] = useState<number>(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
+  const [showTimerModal, setShowTimerModal] = useState<boolean>(false);
+  const [showResultModal, setShowResultModal] = useState<boolean>(false);
 
   const {
     questions,
@@ -78,65 +79,77 @@ const QuestionScreen: FC = () => {
     timer,
     setTimer,
     setEndTime,
-  } = useQuiz()
+  } = useQuiz();
 
-  const currentQuestion = questions[activeQuestion]
-
-  const { question, type, choices, code, image, correctAnswers } = currentQuestion
+  const currentQuestion = questions[activeQuestion];
 
   const onClickNext = () => {
-    const isMatch: boolean =
-      selectedAnswer.length === correctAnswers.length &&
-      selectedAnswer.every((answer) => correctAnswers.includes(answer))
-
-    // adding selected answer, and if answer matches key to result array with current question
-    setResult([...result, { ...currentQuestion, selectedAnswer, isMatch }])
+    let isMatch = false;
+    let newResult: Result;
+  
+    if ('correctAnswers' in currentQuestion) {
+      // Handling for pre-built questions
+      isMatch = selectedAnswer.length === currentQuestion.correctAnswers.length &&
+                selectedAnswer.every((answer) => currentQuestion.correctAnswers.includes(answer));
+  
+      newResult = {
+        ...currentQuestion,
+        selectedAnswer,
+        isMatch
+      };
+    } else {
+      // Adjusted handling for AI-generated questions
+      isMatch = selectedAnswer.includes(currentQuestion.correctAnswer);
+  
+      // Assuming the default type for AI questions is 'MCQs' and score is a calculated or static value
+      newResult = {
+        ...currentQuestion,
+        selectedAnswer,
+        isMatch,
+        type: 'MCQs', // Default type for AI questions
+        correctAnswers: [currentQuestion.correctAnswer], // Converting single correct answer to an array
+        score: isMatch ? 1 : 0 // Example scoring, adjust as necessary
+      };
+    }
+  
+    setResult([...result, newResult]);
 
     if (activeQuestion !== questions.length - 1) {
-      setActiveQuestion((prev) => prev + 1)
+      setActiveQuestion((prev) => prev + 1);
     } else {
-      // how long does it take to finish the quiz
-      const timeTaken = quizDetails.totalTime - timer
-      setEndTime(timeTaken)
-      setShowResultModal(true)
+      const timeTaken = quizDetails.totalTime - timer;
+      setEndTime(timeTaken);
+      setShowResultModal(true);
     }
-    setSelectedAnswer([])
-  }
+    setSelectedAnswer([]);
+  };
 
   const handleAnswerSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target
+    const { name, checked } = e.target;
+    const type = 'correctAnswers' in currentQuestion ? currentQuestion.type : 'MCQs';
 
     if (type === 'MAQs') {
-      if (selectedAnswer.includes(name)) {
-        setSelectedAnswer((prevSelectedAnswer) =>
-          prevSelectedAnswer.filter((element) => element !== name)
-        )
-      } else {
-        setSelectedAnswer((prevSelectedAnswer) => [...prevSelectedAnswer, name])
-      }
+      const updatedAnswers = checked
+        ? [...selectedAnswer, name]
+        : selectedAnswer.filter((answer) => answer !== name);
+      setSelectedAnswer(updatedAnswers);
+    } else if (checked) {
+      setSelectedAnswer([name]);
     }
-
-    if (type === 'MCQs' || type === 'boolean') {
-      if (checked) {
-        setSelectedAnswer([name])
-      }
-    }
-  }
+  };
 
   const handleModal = () => {
-    setCurrentScreen(ScreenTypes.ResultScreen)
-    document.body.style.overflow = 'auto'
-  }
+    setCurrentScreen(ScreenTypes.ResultScreen);
+    document.body.style.overflow = 'auto';
+  };
 
-  // to prevent scrolling when modal is opened
   useEffect(() => {
     if (showTimerModal || showResultModal) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     }
-  }, [showTimerModal, showResultModal])
+  }, [showTimerModal, showResultModal]);
 
-  // timer hooks, handle conditions related to time
-  useTimer(timer, quizDetails, setEndTime, setTimer, setShowTimerModal, showResultModal)
+  useTimer(timer, quizDetails, setEndTime, setTimer, setShowTimerModal, showResultModal);
 
   return (
     <PageCenter>
@@ -150,11 +163,7 @@ const QuestionScreen: FC = () => {
           timer={timer}
         />
         <Question
-          question={question}
-          code={code}
-          image={image}
-          choices={choices}
-          type={type}
+          questionData={currentQuestion}
           handleAnswerSelection={handleAnswerSelection}
           selectedAnswer={selectedAnswer}
         />
@@ -168,7 +177,6 @@ const QuestionScreen: FC = () => {
           />
         </ButtonWrapper>
       </QuizContainer>
-      {/* timer or finish quiz modal*/}
       {(showTimerModal || showResultModal) && (
         <ModalWrapper
           title={showResultModal ? 'Done!' : 'Your time is up!'}
@@ -179,7 +187,7 @@ const QuestionScreen: FC = () => {
         />
       )}
     </PageCenter>
-  )
-}
+  );
+};
 
-export default QuestionScreen
+export default QuestionScreen;

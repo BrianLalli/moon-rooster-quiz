@@ -1,14 +1,13 @@
-import { FC } from 'react'
-import styled, { css } from 'styled-components'
-import { device } from '../../../styles/BreakPoints'
+import { FC } from 'react';
+import styled, { css } from 'styled-components';
+import { device } from '../../../styles/BreakPoints';
 
 const AnswerStyle = styled.div<{ highlightAnswer: boolean }>`
   font-size: clamp(18px, 4vw, 16px);
   color: ${({ theme }) => theme.colors.secondaryText};
   font-weight: 400;
-  border: 1px solid
-    ${({ highlightAnswer, theme }) =>
-      highlightAnswer ? `${theme.colors.themeColor}` : `${theme.colors.border}`};
+  border: 1px solid ${({ highlightAnswer, theme }) =>
+    highlightAnswer ? `${theme.colors.themeColor}` : `${theme.colors.border}`};
   background-color: ${({ highlightAnswer, theme }) =>
     highlightAnswer ? `${theme.colors.selectedAnswer}` : `${theme.colors.answerBg}`};
   border-radius: 16px;
@@ -26,7 +25,7 @@ const AnswerStyle = styled.div<{ highlightAnswer: boolean }>`
     visibility: hidden;
     margin: 0;
   }
-`
+`;
 
 const AnswerLabel = styled.label`
   padding: 18px;
@@ -35,29 +34,33 @@ const AnswerLabel = styled.label`
   @media ${device.md} {
     padding: 14px;
   }
-`
+`;
 
-const ChoiceLabel = styled.span``
+const ChoiceLabel = styled.span``;
 
 interface AnswerProps {
-  index: number
-  choice: string
-  type: string
-  selectedAnswer: string[]
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  index: number;
+  choice: string;
+  type: string;
+  selectedAnswer: string[];
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Answer: FC<AnswerProps> = ({ onChange, index, choice, type, selectedAnswer }) => {
-  // Convert index to alphabet character to show ABCD before question
-  const label = String.fromCharCode(65 + index)
+const Answer: FC<AnswerProps> = ({
+  onChange,
+  index,
+  choice,
+  type = 'MCQs', // Default type set to 'MCQs'
+  selectedAnswer
+}) => {
+  const label = String.fromCharCode(65 + index); // Convert index to alphabet character
 
   return (
-    <AnswerStyle key={index} highlightAnswer={selectedAnswer.includes(choice)}>
+    <AnswerStyle highlightAnswer={selectedAnswer.includes(choice)}>
       <AnswerLabel>
         <ChoiceLabel>{label}.</ChoiceLabel>
         <input
           name={choice}
-          // radio is for checked one option and checkbox is for checked multiple options
           type={type === 'MAQs' ? 'checkbox' : 'radio'}
           checked={selectedAnswer.includes(choice)}
           onChange={onChange}
@@ -65,7 +68,7 @@ const Answer: FC<AnswerProps> = ({ onChange, index, choice, type, selectedAnswer
         {choice}
       </AnswerLabel>
     </AnswerStyle>
-  )
-}
+  );
+};
 
-export default Answer
+export default Answer;
