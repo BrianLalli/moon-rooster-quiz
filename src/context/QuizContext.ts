@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react'
-import { QuizContextTypes, ScreenTypes } from '../types'
+import { createContext, useContext } from 'react';
+import { QuizContextTypes, ScreenTypes } from '../types';
 
 export const initialState: QuizContextTypes = {
   currentScreen: ScreenTypes.SplashScreen,
@@ -20,10 +20,11 @@ export const initialState: QuizContextTypes = {
     totalTime: 0,
     selectedQuizTopic: 'React',
   },
-}
+  isFetchingQuestions: false, // Initialize as false
+};
 
-export const QuizContext = createContext<QuizContextTypes>(initialState)
+export const QuizContext = createContext<QuizContextTypes>(initialState);
 
 export function useQuiz() {
-  return useContext(QuizContext)
+  return useContext(QuizContext);
 }

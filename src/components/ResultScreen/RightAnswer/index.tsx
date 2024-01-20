@@ -1,11 +1,11 @@
-import { FC } from 'react'
-import styled from 'styled-components'
+import { FC } from 'react';
+import styled from 'styled-components';
 
-import { HighlightedText } from '../../../styles/Global'
+import { HighlightedText } from '../../../styles/Global';
 
 interface RightAnswerProps {
-  correctAnswers: string[]
-  choices: string[]
+  correctAnswer: string; // Single correct answer
+  choices: string[];
 }
 
 const RightAnswerContainer = styled.p`
@@ -14,23 +14,19 @@ const RightAnswerContainer = styled.p`
   color: ${({ theme }) => theme.colors.darkerGray};
   margin-top: 15px;
   line-height: 1.2;
-`
+`;
 
-const RightAnswer: FC<RightAnswerProps> = ({ correctAnswers, choices }) => {
+const RightAnswer: FC<RightAnswerProps> = ({ correctAnswer, choices }) => {
+  const label = String.fromCharCode(65 + choices.indexOf(correctAnswer));
+
   return (
     <RightAnswerContainer>
-      {`Right ${correctAnswers.length < 2 ? 'Answer' : 'Answers'}: `}
-      {correctAnswers.map((item: string, index: number) => {
-        const label = String.fromCharCode(65 + choices.indexOf(item))
-
-        return (
-          <HighlightedText key={index} themeText>
-            {`${label} (${item})${index !== correctAnswers.length - 1 ? ', ' : ''}`}
-          </HighlightedText>
-        )
-      })}
+      {'Right Answer: '}
+      <HighlightedText themeText>
+        {`${label} (${correctAnswer})`}
+      </HighlightedText>
     </RightAnswerContainer>
-  )
-}
+  );
+};
 
-export default RightAnswer
+export default RightAnswer;

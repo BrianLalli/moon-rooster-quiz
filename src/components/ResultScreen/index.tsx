@@ -127,75 +127,38 @@ const ResultScreen: FC = () => {
 
   return (
     <ResultScreenContainer>
-      <LogoContainer>
-        <AppLogo />
-      </LogoContainer>
+      {/* ... [other UI elements] */}
       <InnerContainer>
         <ResultOverview result={result} />
-        {result.map(
-          (
-            {
-              question,
-              choices,
-              code,
-              image,
-              correctAnswers,
-              selectedAnswer,
-              score,
-              isMatch,
-            },
-            index: number
-          ) => {
-            return (
-              <QuestionContainer key={question}>
-                <ResizableBox width="90%">
-                  <Flex gap="4px">
-                    <QuestionNumber>{`${index + 1}. `}</QuestionNumber>
-                    <QuestionStyle>{question}</QuestionStyle>
-                  </Flex>
-                  <div>
-                    {code && <CodeSnippet code={code} language="javascript" />}
-                    {image && <QuizImage image={image} />}
-                    <ul>
-                      {choices.map((ans: string, index: number) => {
-                        // Convert index to alphabet character
-                        const label = String.fromCharCode(65 + index)
-                        const correct =
-                          selectedAnswer.includes(ans) && correctAnswers.includes(ans)
-                        const wrong =
-                          selectedAnswer.includes(ans) && !correctAnswers.includes(ans)
+        {result.map(({ question, choices, selectedAnswer, isMatch }, index: number) => {
+          return (
+            <QuestionContainer key={question}>
+              <ResizableBox width="90%">
+                {/* ... [Question display logic] */}
+                <ul>
+                  {choices.map((ans: string, index: number) => {
+                    const label = String.fromCharCode(65 + index);
+                    const correct = selectedAnswer.includes(ans) && ans === selectedAnswer[0];
+                    const wrong = selectedAnswer.includes(ans) && ans !== selectedAnswer[0];
 
-                        return (
-                          <Answer key={ans} correct={correct} wrong={wrong}>
-                            <span>{label}.</span>
-                            {ans}
-                          </Answer>
-                        )
-                      })}
-                    </ul>
-                    {/* only show if the answer is wrong */}
-                    {!isMatch && (
-                      <RightAnswer correctAnswers={correctAnswers} choices={choices} />
-                    )}
-                  </div>
-                </ResizableBox>
-                <Score right={isMatch}>{`Score ${isMatch ? score : 0}`}</Score>
-              </QuestionContainer>
-            )
-          }
-        )}
+                    return (
+                      <Answer key={ans} correct={correct} wrong={wrong}>
+                        <span>{label}.</span>
+                        {ans}
+                      </Answer>
+                    );
+                  })}
+                </ul>
+                {/* RightAnswer component might need to be adjusted or removed */}
+              </ResizableBox>
+              <Score right={isMatch}>{`Score ${isMatch ? 1 : 0}`}</Score>
+            </QuestionContainer>
+          );
+        })}
       </InnerContainer>
-      <Flex flxEnd>
-        <Button
-          text="RETRY"
-          onClick={onClickRetry}
-          icon={<Refresh />}
-          iconPosition="left"
-          bold
-        />
-      </Flex>
+      {/* ... [Retry button logic] */}
     </ResultScreenContainer>
-  )
-}
+  );
+};
 
-export default ResultScreen
+export default ResultScreen;

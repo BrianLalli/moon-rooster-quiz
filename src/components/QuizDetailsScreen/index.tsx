@@ -1,23 +1,23 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { AppLogo, StartIcon } from '../../config/icons'
-import { useQuiz } from '../../context/QuizContext'
+import { AppLogo, StartIcon } from '../../config/icons';
+import { useQuiz } from '../../context/QuizContext';
 import {
   CenterCardContainer,
   HighlightedText,
   LogoContainer,
   PageCenter,
-} from '../../styles/Global'
-import { ScreenTypes } from '../../types'
-import { convertSeconds } from '../../utils/helpers'
+} from '../../styles/Global';
+import { ScreenTypes } from '../../types';
+import { convertSeconds } from '../../utils/helpers';
 
-import Button from '../ui/Button'
+import Button from '../ui/Button';
 
 const AppTitle = styled.h2`
   font-weight: 700;
   font-size: 32px;
   color: ${({ theme }) => theme.colors.themeColor};
-`
+`;
 
 const DetailTextContainer = styled.div`
   font-size: 20px;
@@ -26,22 +26,39 @@ const DetailTextContainer = styled.div`
   margin-bottom: 40px;
   text-align: center;
   max-width: 500px;
-`
+`;
 
 const DetailText = styled.p`
   font-size: 20px;
   font-weight: 500;
   margin-top: 15px;
   line-height: 1.3;
-`
+`;
+
+const LoadingText = styled.p`
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+`;
 
 const QuizDetailsScreen = () => {
-  const { setCurrentScreen, quizDetails } = useQuiz()
+  const { setCurrentScreen, quizDetails, isFetchingQuestions } = useQuiz();
 
-  const { selectedQuizTopic, totalQuestions, totalScore, totalTime } = quizDetails
+  const { selectedQuizTopic } = quizDetails;
+
+  const totalQuestions = 10; // Fixed number of total questions
+  const totalScore = 100; // Fixed total score
+  const totalTime = 60; // Fixed total time in seconds
 
   const goToQuestionScreen = () => {
-    setCurrentScreen(ScreenTypes.QuestionScreen)
+    if (!isFetchingQuestions) {
+      setCurrentScreen(ScreenTypes.QuestionScreen);
+    }
+  };
+
+  // Check if the questions are still being fetched
+  if (isFetchingQuestions) {
+    return <LoadingText>Loading quiz details...</LoadingText>;
   }
 
   return (
@@ -56,8 +73,7 @@ const QuizDetailsScreen = () => {
             Selected Quiz Topic: <HighlightedText>{selectedQuizTopic}</HighlightedText>
           </DetailText>
           <DetailText>
-            Total questions to attempt:{' '}
-            <HighlightedText>{totalQuestions}</HighlightedText>
+            Total questions to attempt: <HighlightedText>{totalQuestions}</HighlightedText>
           </DetailText>
           <DetailText>
             Score in total: <HighlightedText>{totalScore}</HighlightedText>
@@ -79,7 +95,7 @@ const QuizDetailsScreen = () => {
         />
       </CenterCardContainer>
     </PageCenter>
-  )
-}
+  );
+};
 
-export default QuizDetailsScreen
+export default QuizDetailsScreen;

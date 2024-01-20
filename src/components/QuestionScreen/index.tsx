@@ -69,6 +69,7 @@ const QuestionScreen: FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
   const [showTimerModal, setShowTimerModal] = useState<boolean>(false);
   const [showResultModal, setShowResultModal] = useState<boolean>(false);
+  const [isQuizSubmitted, setIsQuizSubmitted] = useState<boolean>(false); // Added state for quiz submission
 
   const {
     questions,
@@ -81,36 +82,36 @@ const QuestionScreen: FC = () => {
     setEndTime,
   } = useQuiz();
 
+  useEffect(() => {
+    if (showTimerModal || showResultModal) {
+      document.body.style.overflow = 'hidden';
+      setIsQuizSubmitted(true); // Set quiz as submitted when showing result modal
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showTimerModal, showResultModal]);
+
+  useTimer(timer, quizDetails, setEndTime, setTimer, setShowTimerModal, showResultModal);
+
   const currentQuestion = questions[activeQuestion];
 
+  console.log('Current Question:', currentQuestion); // Logging current question
+  console.log('All Questions:', questions); // Logging all questions
+  console.log('Active Question Index:', activeQuestion); // Logging active question index
+  console.log('Is Quiz Submitted:', isQuizSubmitted); // Logging quiz submission status
+
+  if (!currentQuestion) {
+    return <div>Loading question...</div>;
+  }
+
   const onClickNext = () => {
-    let isMatch = false;
-    let newResult: Result;
+    const isMatch = 'correctAnswer' in currentQuestion && selectedAnswer.includes(currentQuestion.correctAnswer);
   
-    if ('correctAnswers' in currentQuestion) {
-      // Handling for pre-built questions
-      isMatch = selectedAnswer.length === currentQuestion.correctAnswers.length &&
-                selectedAnswer.every((answer) => currentQuestion.correctAnswers.includes(answer));
-  
-      newResult = {
-        ...currentQuestion,
-        selectedAnswer,
-        isMatch
-      };
-    } else {
-      // Adjusted handling for AI-generated questions
-      isMatch = selectedAnswer.includes(currentQuestion.correctAnswer);
-  
-      // Assuming the default type for AI questions is 'MCQs' and score is a calculated or static value
-      newResult = {
-        ...currentQuestion,
-        selectedAnswer,
-        isMatch,
-        type: 'MCQs', // Default type for AI questions
-        correctAnswers: [currentQuestion.correctAnswer], // Converting single correct answer to an array
-        score: isMatch ? 1 : 0 // Example scoring, adjust as necessary
-      };
-    }
+    const newResult = {
+      ...currentQuestion,
+      selectedAnswer,
+      isMatch
+    };
   
     setResult([...result, newResult]);
 
@@ -126,14 +127,7 @@ const QuestionScreen: FC = () => {
 
   const handleAnswerSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    const type = 'correctAnswers' in currentQuestion ? currentQuestion.type : 'MCQs';
-
-    if (type === 'MAQs') {
-      const updatedAnswers = checked
-        ? [...selectedAnswer, name]
-        : selectedAnswer.filter((answer) => answer !== name);
-      setSelectedAnswer(updatedAnswers);
-    } else if (checked) {
+    if (checked) {
       setSelectedAnswer([name]);
     }
   };
@@ -142,14 +136,6 @@ const QuestionScreen: FC = () => {
     setCurrentScreen(ScreenTypes.ResultScreen);
     document.body.style.overflow = 'auto';
   };
-
-  useEffect(() => {
-    if (showTimerModal || showResultModal) {
-      document.body.style.overflow = 'hidden';
-    }
-  }, [showTimerModal, showResultModal]);
-
-  useTimer(timer, quizDetails, setEndTime, setTimer, setShowTimerModal, showResultModal);
 
   return (
     <PageCenter>
@@ -166,6 +152,7 @@ const QuestionScreen: FC = () => {
           questionData={currentQuestion}
           handleAnswerSelection={handleAnswerSelection}
           selectedAnswer={selectedAnswer}
+          isQuizSubmitted={isQuizSubmitted} // Pass the isQuizSubmitted state
         />
         <ButtonWrapper>
           <Button

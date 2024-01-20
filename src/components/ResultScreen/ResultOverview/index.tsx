@@ -67,15 +67,14 @@ interface ResultOverviewProps {
 
 const ResultOverview: React.FC<ResultOverviewProps> = ({ result }) => {
   const { quizDetails, endTime, setCurrentScreen, quizTopic } = useQuiz();
-
   const totalQuestionAttempted = result.length;
 
-  const obtainedScore = result
-    .filter((item) => item.isMatch && typeof item.score === 'number')
-    .reduce((accumulator, currentValue) => accumulator + (currentValue.score || 0), 0);
+  // Each question is worth 10 points
+  const obtainedScore = result.filter((item) => item.isMatch).length * 10;
 
   const calculateStatus =
     (obtainedScore / quizDetails.totalScore) * 100 >= 60 ? 'Passed' : 'Failed';
+
 
   const [username, setUsername] = useState('');
 

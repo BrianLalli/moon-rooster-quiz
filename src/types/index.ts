@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from 'react'
-import { Question } from '../data/QuizQuestions'
+// src/types/index.ts
 
-// AI Question Type
+import { Dispatch, SetStateAction } from 'react';
+
 export type AIQuestion = {
   question: string;
   choices: string[];
@@ -17,7 +17,7 @@ export enum ScreenTypes {
   LeaderBoardScreen,
 }
 
-export interface Result extends Question {
+export interface Result extends AIQuestion {
   selectedAnswer: string[];
   isMatch: boolean;
 }
@@ -27,8 +27,8 @@ export type QuizContextTypes = {
   setCurrentScreen: Dispatch<SetStateAction<ScreenTypes>>;
   quizTopic: string;
   selectQuizTopic: (type: string) => void;
-  questions: (Question | AIQuestion)[]; // Union type for both Question and AIQuestion
-  setQuestions: Dispatch<SetStateAction<(Question | AIQuestion)[]>>;
+  questions: AIQuestion[];
+  setQuestions: Dispatch<SetStateAction<AIQuestion[]>>;
   result: Result[];
   setResult: Dispatch<SetStateAction<Result[]>>;
   timer: number;
@@ -41,4 +41,5 @@ export type QuizContextTypes = {
     totalTime: number;
     selectedQuizTopic: string;
   };
-}
+  isFetchingQuestions: boolean; // Added new state for fetching status
+};

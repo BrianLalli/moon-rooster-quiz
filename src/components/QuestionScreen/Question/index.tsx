@@ -2,9 +2,9 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import { device } from '../../../styles/BreakPoints';
-import CodeSnippet from '../../ui/CodeSnippet';
+// import CodeSnippet from '../../ui/CodeSnippet';
 import Answer from '../Answer';
-import QuizImage from '../../ui/QuizImage';
+// import QuizImage from '../../ui/QuizImage';
 
 const QuestionContainer = styled.div`
   margin-top: 30px;
@@ -30,47 +30,30 @@ const QuestionStyle = styled.h2`
   line-height: 1.3;
 `;
 
-// AI Question Type
 type AIQuestion = {
   question: string;
   choices: string[];
   correctAnswer: string;
 };
 
-// Modify or ensure the Question type has the necessary fields
-interface Question {
-  question: string;
-  choices: string[];
-  code?: string;
-  image?: string;
-  type: string;
-}
-
 interface QuestionProps {
-  questionData: Question | AIQuestion;
+  questionData: AIQuestion;
   selectedAnswer: string[];
   handleAnswerSelection: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+  isQuizSubmitted: boolean;
 }
 
 const Question: FC<QuestionProps> = ({
   questionData,
   selectedAnswer,
   handleAnswerSelection,
+  isQuizSubmitted,
 }) => {
-  const isAIQuestion = 'correctAnswer' in questionData;
-  const { question, choices } = questionData;
-  let code: string | undefined, image: string | undefined, type: string | undefined;
-
-  // If it's not an AI question, extract additional properties
-  if (!isAIQuestion) {
-    ({ code, image, type } = questionData as Question);
-  }
+  const { question, choices, correctAnswer } = questionData;
 
   return (
     <QuestionContainer>
       <QuestionStyle>{question}</QuestionStyle>
-      {code && <CodeSnippet code={code} language="javascript" />}
-      {image && <QuizImage image={image} />}
       <AnswersContainer>
         {choices.map((choice, index) => (
           <Answer
@@ -78,8 +61,10 @@ const Question: FC<QuestionProps> = ({
             index={index}
             key={index}
             onChange={(e) => handleAnswerSelection(e, index)}
-            type={type || 'MCQs'} // Default to 'MCQs' if type is not defined
             selectedAnswer={selectedAnswer}
+            isCorrect={choice === correctAnswer}
+            isSubmitted={isQuizSubmitted}
+            type="MCQs"
           />
         ))}
       </AnswersContainer>
