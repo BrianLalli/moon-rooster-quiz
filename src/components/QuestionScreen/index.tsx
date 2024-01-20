@@ -106,7 +106,8 @@ const QuestionScreen: FC = () => {
 
   const onClickNext = () => {
     const isMatch = 'correctAnswer' in currentQuestion && selectedAnswer.includes(currentQuestion.correctAnswer);
-  
+    console.log('Selected Answer vs Correct Answer:', selectedAnswer, currentQuestion.correctAnswer, isMatch); // Log comparison
+
     const newResult = {
       ...currentQuestion,
       selectedAnswer,

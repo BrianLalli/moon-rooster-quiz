@@ -40,6 +40,7 @@ const SubmitButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  margin-top: 10px;
 
   &:hover {
     background-color: #45a049;
