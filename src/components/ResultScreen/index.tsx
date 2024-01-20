@@ -130,35 +130,39 @@ const ResultScreen: FC = () => {
       {/* ... [other UI elements] */}
       <InnerContainer>
         <ResultOverview result={result} />
-        {result.map(({ question, choices, selectedAnswer, isMatch }, index: number) => {
-          return (
-            <QuestionContainer key={question}>
-              <ResizableBox width="90%">
-                {/* ... [Question display logic] */}
+        {result.map(
+          (
+            { question, choices, selectedAnswer, correctAnswer, isMatch },
+            index: number
+          ) => {
+            return (
+              <QuestionContainer key={question}>
+                {/* ... other code */}
                 <ul>
-                  {choices.map((ans: string, index: number) => {
-                    const label = String.fromCharCode(65 + index);
-                    const correct = selectedAnswer.includes(ans) && ans === selectedAnswer[0];
-                    const wrong = selectedAnswer.includes(ans) && ans !== selectedAnswer[0];
+                  {choices.map((ans, idx) => {
+                    const label = String.fromCharCode(65 + idx)
+                    const isSelected = selectedAnswer.includes(ans)
+                    const isCorrect = ans === correctAnswer
+                    const isWrong = isSelected && !isCorrect
 
                     return (
-                      <Answer key={ans} correct={correct} wrong={wrong}>
+                      <Answer key={ans} correct={isCorrect} wrong={isWrong}>
                         <span>{label}.</span>
                         {ans}
                       </Answer>
-                    );
+                    )
                   })}
                 </ul>
-                {/* RightAnswer component might need to be adjusted or removed */}
-              </ResizableBox>
-              <Score right={isMatch}>{`Score ${isMatch ? 1 : 0}`}</Score>
-            </QuestionContainer>
-          );
-        })}
+                {/* Score display adjusted to reflect 10 points for correct answer */}
+                <Score right={isMatch}>{`Score ${isMatch ? 1 : 0}`}</Score>
+              </QuestionContainer>
+            )
+          }
+        )}
       </InnerContainer>
       {/* ... [Retry button logic] */}
     </ResultScreenContainer>
-  );
-};
+  )
+}
 
-export default ResultScreen;
+export default ResultScreen

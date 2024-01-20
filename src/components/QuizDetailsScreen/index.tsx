@@ -11,7 +11,7 @@ import {
 } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 import { convertSeconds } from '../../utils/helpers'
-
+import HomeButton from '../HomeButton';
 import Button from '../ui/Button'
 
 const AppTitle = styled.h2`
@@ -165,6 +165,7 @@ const QuizDetailsScreen = () => {
           onClick={goToQuestionScreen}
           bold
         />
+        <HomeButton /> {/* Place the HomeButton */}
       </CenterCardContainer>
     </PageCenter>
   )

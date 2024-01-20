@@ -13,6 +13,7 @@ import Button from '../ui/Button'
 import ModalWrapper from '../ui/ModalWrapper'
 import Question from './Question'
 import QuizHeader from './QuizHeader'
+import HomeButton from '../HomeButton';
 
 const QuizContainer = styled.div<{ selectedAnswer: boolean }>`
   width: 900px;
@@ -174,6 +175,7 @@ const QuestionScreen: FC = () => {
           buttonTitle="SHOW RESULT"
         />
       )}
+      <HomeButton />
     </PageCenter>
   );
 };
