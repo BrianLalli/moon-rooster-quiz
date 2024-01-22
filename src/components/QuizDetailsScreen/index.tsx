@@ -49,6 +49,7 @@ const LoadingCard = styled.div`
 const LoadingText = styled.div`
   font-size: 20px;
   margin-bottom: 20px;
+  color: black;
 `
 
 const spin = keyframes`
@@ -108,7 +109,30 @@ const QuizDetailsScreen = () => {
     'Fun Fact: Octopuses lay 56,000 eggs at a time.',
     'Did you know? The heart of a shrimp is located in its head.',
     "Fun Fact: A rhinoceros' horn is made of hair.",
-  ]
+    'Did you know? The world\'s largest snowflake was recorded to be 15 inches wide and 8 inches thick.',
+    'Fun Fact: Cats have five toes on their front paws but only four on the back.',
+    'Did you know? The world\'s oldest known recipe is for beer.',
+    'Fun Fact: The loudest sound produced by any animal is 188 decibels by a sperm whale.',
+    'Did you know? The first person convicted of speeding was going 8 mph.',
+    'Fun Fact: The inventor of the Pringles can is buried in one.',
+    'Did you know? In Switzerland, it\'s illegal to own just one guinea pig because they get lonely.',
+    'Fun Fact: Butterflies taste with their feet.',
+    'Did you know? The world\'s deepest postbox is in Susami Bay, Japan.',
+    'Fun Fact: In 2007, an American man named Corey Taylor tried to fake his own death to get out of his cell phone contract without a penalty.',
+    'Did you know? An octopus has three hearts.',
+    'Fun Fact: A single teaspoon of honey is the lifetime work of 12 bees.',
+    'Did you know? The Mona Lisa has no eyebrows.',
+    'Fun Fact: You can\'t hum while holding your nose closed.',
+    'Did you know? The total weight of ants on earth once equaled the total weight of people.',
+    'Fun Fact: There is an official World Rock Paper Scissors Society.',
+    'Did you know? The national animal of Wales is the dragon.',
+    'Fun Fact: The first alarm clock could only ring at 4 a.m.',
+    'Did you know? Polar bear fur is actually transparent, not white.',
+    'Did you know? A group of kangaroos is called a mob.',
+    'Fun Fact: The fingerprints of a koala are so indistinguishable from humans that they have on occasion been confused at a crime scene.',
+    'Did you know? The first oranges weren’t orange - they were green.',
+  ];
+  
 
   const [randomFunFact, setRandomFunFact] = useState('')
 
