@@ -1,33 +1,33 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useQuiz } from '../../context/QuizContext';
-import { ScreenTypes } from '../../types';
+import React from 'react'
+import styled from 'styled-components'
+import { useQuiz } from '../../context/QuizContext'
+import { ScreenTypes } from '../../types'
 
-import { AppLogo } from '../../config/icons';
-import { quizTopics } from '../../data/quizTopics';
-import { device } from '../../styles/BreakPoints';
+import { AppLogo } from '../../config/icons'
+import { quizTopics } from '../../data/quizTopics'
+import { device } from '../../styles/BreakPoints'
 import {
   CenterCardContainer,
   HighlightedText,
   LogoContainer,
   PageCenter,
-} from '../../styles/Global';
+} from '../../styles/Global'
 
-import Button from '../ui/Button';
+import Button from '../ui/Button'
 
 const Heading = styled.h2`
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
-`;
+`
 
 const DetailText = styled.p`
   font-weight: 500;
   font-size: 20px;
   line-height: 29px;
   text-align: center;
-`;
+`
 
 const SelectButtonContainer = styled.div`
   display: flex;
@@ -42,27 +42,18 @@ const SelectButtonContainer = styled.div`
     column-gap: 20px;
     max-width: 100%;
   }
+`
+const ButtonWrapper = styled.div`
+  margin-top: 20px; // Adjust the margin as needed
 `;
 
-const ViewLeaderboardButton = styled.button`
-  padding: 10px 15px;
-  background: linear-gradient(90deg, #000000, #1c75bc); /* Gradient background with the two colors */
-  color: white; /* Text color */
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
-
-  &:hover {
-    background: linear-gradient(90deg, #1c75bc, #61DBFB); /* Gradient background for hover with reversed colors */
-  }
+const StyledButton = styled(Button)`
+  font-size: 12px; // Reduced font size
 `;
-
 
 interface SelectButtonProps {
-  active: boolean;
-  disabled?: boolean;
+  active: boolean
+  disabled?: boolean
 }
 
 const SelectButton = styled.div<SelectButtonProps>`
@@ -83,7 +74,7 @@ const SelectButton = styled.div<SelectButtonProps>`
     tap-highlight-color: transparent;
     -webkit-tap-highlight-color: transparent;
   }
-`;
+`
 
 const SelectButtonText = styled.span`
   font-size: 18px;
@@ -93,18 +84,18 @@ const SelectButtonText = styled.span`
     font-size: 16px;
     font-weight: 500;
   }
-`;
+`
 
 const QuizTopicsScreen: React.FC = () => {
-  const { quizTopic, selectQuizTopic, setCurrentScreen } = useQuiz();
+  const { quizTopic, selectQuizTopic, setCurrentScreen } = useQuiz()
 
   const goToQuizDetailsScreen = () => {
-    setCurrentScreen(ScreenTypes.QuizDetailsScreen);
-  };
+    setCurrentScreen(ScreenTypes.QuizDetailsScreen)
+  }
 
   const goToLeaderboard = () => {
-    setCurrentScreen(ScreenTypes.LeaderBoardScreen);
-  };
+    setCurrentScreen(ScreenTypes.LeaderBoardScreen)
+  }
 
   return (
     <PageCenter light justifyCenter>
@@ -130,10 +121,12 @@ const QuizTopicsScreen: React.FC = () => {
           ))}
         </SelectButtonContainer>
         <Button text="Continue" onClick={goToQuizDetailsScreen} bold />
-        <ViewLeaderboardButton onClick={goToLeaderboard}>View Leaderboard</ViewLeaderboardButton>
+        <ButtonWrapper>
+          <StyledButton text="View Leaderboard" onClick={goToLeaderboard} bold />
+        </ButtonWrapper>
       </CenterCardContainer>
     </PageCenter>
-  );
-};
+  )
+}
 
-export default QuizTopicsScreen;
+export default QuizTopicsScreen

@@ -16,10 +16,6 @@ const QuizProvider = ({ children }: QuizProviderProps) => {
   const [endTime, setEndTime] = useState<number>(0);
   const [isFetchingQuestions, setIsFetchingQuestions] = useState<boolean>(false);
 
-  console.log('Current Screen:', currentScreen); // Log current screen
-  console.log('Quiz Topic:', quizTopic); // Log quiz topic
-  console.log('AI Questions:', questions); // Log AI questions
-
   const quizDetails = {
     totalQuestions: questions.length,
     totalScore: 100,
@@ -27,28 +23,22 @@ const QuizProvider = ({ children }: QuizProviderProps) => {
     selectedQuizTopic: quizTopic,
   };
 
+  const resetQuizData = () => {
+    // Clearing quiz-related states
+    setQuestions([]);
+    setResult([]);
+    setTimer(60);
+    setEndTime(0);
+  };
+
   const fetchAIQuestions = async (topic: string) => {
     setIsFetchingQuestions(true);
     try {
       const aiQuestions = await getTriviaQuestions(topic);
-      console.log('Fetched AI Questions:', aiQuestions);
-
-      const isValidFormat = aiQuestions.every((question: AIQuestion) => 
-        typeof question.question === 'string' && 
-        Array.isArray(question.choices) && 
-        question.choices.every((choice: string) => typeof choice === 'string') && 
-        typeof question.correctAnswer === 'string'
-      );
-
-      if (isValidFormat) {
+      if (aiQuestions.length > 0) {
         setQuestions(aiQuestions);
       } else {
-        console.error('Invalid format for AI-generated questions:', aiQuestions);
-        console.log('Invalid questions:', aiQuestions.filter((q: AIQuestion) => 
-          !q.correctAnswer || 
-          !Array.isArray(q.choices) || 
-          typeof q.question !== 'string'
-        ));
+        console.error('No valid questions found for the topic:', topic);
         setQuestions([]);
       }
     } catch (error) {
@@ -58,13 +48,18 @@ const QuizProvider = ({ children }: QuizProviderProps) => {
     setIsFetchingQuestions(false);
   };
 
-
   useEffect(() => {
     if (currentScreen === ScreenTypes.QuizDetailsScreen && quizTopic) {
-      console.log('Fetching AI Questions for topic:', quizTopic); // Log when fetching starts
       fetchAIQuestions(quizTopic);
     }
   }, [quizTopic, currentScreen]);
+
+  // Reset quiz data when a new quiz topic is selected
+  useEffect(() => {
+    if (quizTopic) {
+      resetQuizData();
+    }
+  }, [quizTopic]);
 
   const contextValue: QuizContextTypes = {
     currentScreen,

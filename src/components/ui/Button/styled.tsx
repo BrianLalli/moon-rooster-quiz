@@ -25,6 +25,7 @@ export const ButtonStyle = styled.button.attrs(({ outline, bold, big }: ButtonTy
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
   @media ${device.md} {
     width: ${({ big }) => (big ? '180px' : '150px')};
     min-height: 40px;

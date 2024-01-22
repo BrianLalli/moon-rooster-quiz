@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import supabase from '../../api/supabaseClient'
 import { PageCenter, CenterCardContainer } from '../../styles/Global'
 import { quizTopics } from '../../data/quizTopics' // Update this path to where your quizTopics are defined
+import HomeButton from '../HomeButton';
 
 // Interface for score
 interface Score {
@@ -171,6 +172,7 @@ const Leaderboard: React.FC = () => {
             </MotionLeaderboardList>
           </LeaderboardContainer>
         )}
+          <HomeButton /> {/* Place the HomeButton */}
       </CenterCardContainer>
     </PageCenter>
   )
